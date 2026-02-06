@@ -6,9 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import model.dto.CustomerDto;
+import model.dto.ItemDTO;
+import service.impl.CustomerServiceImpl;
+import service.impl.ItemServiceImpl;
 
 public class PlaceOrdreController {
-
+       ItemServiceImpl itemService= new ItemServiceImpl();
+       CustomerServiceImpl customerService = new CustomerServiceImpl();
     @FXML
     private TableColumn<?, ?> colDescription;
 
@@ -60,13 +65,16 @@ public class PlaceOrdreController {
     }
 
     @FXML
-    void btnCustomerIdOnAction(ActionEvent event) {
-
+    void txtCustomerIdOnAction(ActionEvent event) {
+        CustomerDto customerDto = customerService.searchId(txtCustomerId.getText(),txtName.getText());
+        txtName.setText(customerDto.getName());
     }
 
     @FXML
-    void btnItemCodeOnAction(ActionEvent event) {
-
+    void txtItemCodeOnAction(ActionEvent event) {
+        ItemDTO itemDTO=itemService.searchItem(txtItemCode.getText(),txtDescription.getText());
+        txtDescription.setText(itemDTO.getDescription());
+        txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
     }
 
     @FXML

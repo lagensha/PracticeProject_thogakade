@@ -16,5 +16,5 @@ public interface ItemService {
 
     // Return ArrayList, not ObservableList. The Controller will convert it to ObservableList.
     List<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException;
-    ResultSet searchItem(String itemCode, String description);
+    ItemDTO searchItem(String itemCode, String description);
 }

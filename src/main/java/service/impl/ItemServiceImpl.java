@@ -1,13 +1,10 @@
-package service;
+package service.impl;
 
-import db.DBConnection;
-import javafx.collections.ObservableList;
 import model.dto.ItemDTO;
 import repository.ItemRepository;
-import repository.ItemRepositoryImpl;
+import repository.impl.ItemRepositoryImpl;
+import service.ItemService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,7 +43,19 @@ public class ItemServiceImpl implements ItemService {
         }
         return itemDTOList;
     }
-   public ResultSet searchItem(String itemCode, String description){
-        return null;
-    }
+   public ItemDTO searchItem(String itemCode, String description){
+       try {
+           ResultSet resultSet=itemRepository.searchItem(itemCode,description);
+           resultSet.next();
+           return new ItemDTO(
+           resultSet.getString("ItemCode"),
+           resultSet.getString("Description"),
+           resultSet.getString("PackSize"),
+           resultSet.getDouble("UnitPrice"),
+           resultSet.getInt("QtyOnHand")
+           );
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+   }
 }

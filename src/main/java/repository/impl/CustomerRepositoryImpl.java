@@ -1,6 +1,7 @@
-package repository;
+package repository.impl;
 
 import db.DBConnection;
+import repository.CustomerRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,6 +61,14 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
 
+        return resultSet;
+    }
+    public ResultSet searchId(String id,String name) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM customer WHERE CustID=? OR CustName=?");
+       preparedStatement.setObject(1,id);
+        preparedStatement.setObject(2,name);
+        ResultSet resultSet= preparedStatement.executeQuery();
         return resultSet;
     }
 }

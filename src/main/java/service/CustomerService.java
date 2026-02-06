@@ -10,4 +10,5 @@ public interface CustomerService {
     void deleteCustomer(String id);
     void updateCustomer(String id, String title, String name, LocalDate dob, double salary, String address, String city, String province, String postalCode);
     List<CustomerDto> getAllCustomers();
+    CustomerDto searchId(String id,String name);
 }

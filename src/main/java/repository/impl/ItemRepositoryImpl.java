@@ -1,14 +1,15 @@
-package repository;
+package repository.impl;
 
 import db.DBConnection;
 import model.dto.ItemDTO;
+import repository.ItemRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ItemRepositoryImpl implements ItemRepository{
+public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public boolean save(ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
@@ -62,7 +63,11 @@ public class ItemRepositoryImpl implements ItemRepository{
         }
     public ResultSet searchItem(String itemCode, String description) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
-
+       PreparedStatement preparedStatement= connection.prepareStatement("SELECT * FROM item WHERE ItemCode=? OR Description=?");
+       preparedStatement.setObject(1,itemCode);
+       preparedStatement.setObject(2,description);
+       ResultSet resultSet=preparedStatement.executeQuery();
+       return resultSet;
     }
     }
 

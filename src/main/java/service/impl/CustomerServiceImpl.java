@@ -1,15 +1,16 @@
-package service;
+package service.impl;
 
 import model.dto.CustomerDto;
 import repository.CustomerRepository;
-import repository.CustomerRepositoryImpl;
+import repository.impl.CustomerRepositoryImpl;
+import service.CustomerService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository = new CustomerRepositoryImpl();
     @Override
     public void addCustomer(String id, String title, String name, LocalDate dob, double salary, String address, String city, String province, String postalCode) {
@@ -49,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService{
                         resultSet.getString("CustID"),
                         resultSet.getString("CustTitle"),
                         resultSet.getString("CustName"),
-                        LocalDate.parse(resultSet.getString("DOB")),
+                        resultSet.getString("DOB"),
                         resultSet.getDouble("salary"),
                         resultSet.getString("CustAddress"),
                         resultSet.getString("City"),
@@ -63,4 +64,23 @@ public class CustomerServiceImpl implements CustomerService{
         }
         return customers;
     }
+   public CustomerDto searchId(String id, String name){
+       try {
+           ResultSet resultSet=customerRepository.searchId(id,name);
+           resultSet.next();
+           return  new CustomerDto(
+                   resultSet.getString("CustID"),
+                   resultSet.getString("CustTitle"),
+                   resultSet.getString("CustName"),
+                   resultSet.getString("DOB"),
+                   resultSet.getDouble("salary"),
+                   resultSet.getString("CustAddress"),
+                   resultSet.getString("City"),
+                   resultSet.getString("Province"),
+                   resultSet.getString("PostalCode")
+           );
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+   }
 }

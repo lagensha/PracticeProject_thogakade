@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.dto.CustomerDto;
 import service.CustomerService;
-import service.CustomerServiceImpl;
+import service.impl.CustomerServiceImpl;
 
 import java.net.URL;
 import java.util.List;

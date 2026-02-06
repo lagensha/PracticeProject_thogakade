@@ -11,4 +11,5 @@ public interface ItemRepository {
     boolean delete(String id) throws SQLException, ClassNotFoundException;
     ResultSet getAll() throws SQLException, ClassNotFoundException;
     ResultSet searchItem(String itemCode, String description) throws SQLException;
+
 }
